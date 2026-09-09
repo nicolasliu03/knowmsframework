@@ -28,6 +28,7 @@
     @endif
 
     <form method="POST" action="{{ url('update-barang') }}">
+
         @csrf
         @method('PUT')
 
@@ -75,7 +76,6 @@
             <tr>
                 <td>Kategori</td>
                 <td>
-
                     <select name="kategori_id">
 
                         @foreach ($kategoris as $kategori)
@@ -90,7 +90,6 @@
                         @endforeach
 
                     </select>
-
                 </td>
             </tr>
 
