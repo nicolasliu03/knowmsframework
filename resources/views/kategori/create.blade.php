@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Barang</title>
+    <title>Tambah Kategori</title>
 </head>
 <body>
 
-    <h2>Tambah Barang</h2>
+    <h2>Tambah Kategori</h2>
 
     {{-- Pesan error --}}
-    @if (session('error'))
-        <div style="color: red;">
-            {{ session('error') }}
-        </div>
-    @endif
-
-    {{-- Validasi --}}
     @if ($errors->any())
         <div style="color: red;">
             <ul>
@@ -27,61 +20,26 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ url('simpan-barang') }}">
+    <form method="POST" action="{{ url('simpan-kategori') }}">
         @csrf
 
         <table>
 
             <tr>
-                <td>Nama Barang</td>
+                <td>Nama Kategori</td>
                 <td>
                     <input
                         type="text"
-                        name="nama"
-                        value="{{ old('nama') }}"
+                        name="nama_kategori"
+                        value="{{ old('nama_kategori') }}"
                     >
                 </td>
             </tr>
 
             <tr>
-                <td>Harga</td>
+                <td>Deskripsi</td>
                 <td>
-                    <input
-                        type="number"
-                        name="harga"
-                        value="{{ old('harga') }}"
-                    >
-                </td>
-            </tr>
-
-            <tr>
-                <td>Stok</td>
-                <td>
-                    <input
-                        type="number"
-                        name="stok"
-                        value="{{ old('stok') }}"
-                    >
-                </td>
-            </tr>
-
-            <tr>
-                <td>Kategori</td>
-                <td>
-                    <select name="kategori_id">
-
-                        <option value="">-- Pilih Kategori --</option>
-
-                        @foreach ($kategoris as $kategori)
-                            <option
-                                value="{{ $kategori->id }}"
-                                {{ old('kategori_id') == $kategori->id ? 'selected' : '' }}
-                            >
-                                {{ $kategori->nama_kategori }}
-                            </option>
-                        @endforeach
-
-                    </select>
+                    <textarea name="deskripsi">{{ old('deskripsi') }}</textarea>
                 </td>
             </tr>
 
@@ -96,7 +54,7 @@
 
     <br>
 
-    <a href="{{ url('daftar-barang') }}">
+    <a href="{{ url('daftar-kategori') }}">
         [KEMBALI]
     </a>
 

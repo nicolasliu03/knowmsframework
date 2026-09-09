@@ -14,6 +14,7 @@ return new class extends Migration
             $table->integer('usia');
             $table->string('email', 45);
             $table->string('telepon', 45);
+            $table->enum('role', ['gudang', 'admin', 'kasir']);
             $table->string('alamat', 45);
             $table->timestamps();
         });

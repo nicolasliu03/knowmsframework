@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UtamaController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\BarangController;  
+use App\Http\Controllers\BarangController;
 
 //ini adalah perubahan dari daniel
 // ini adalah homepage yang mengarah pada controller
@@ -22,6 +22,9 @@ Route::get('/horeee-saya-bisa', function(){
 Route::get('/bisa-aja-bikin-lagi', function(){
     return 'ini loh tak bikin lagi';
 });
+
+Route::get('/informasi/{id}', [KategoriController::class, 'lihatInformasi'])
+    ->name('informasi.show');
 
 // CRUD Kategori
 Route::get('/daftar-kategori', [KategoriController::class, 'tampil']);
@@ -42,6 +45,10 @@ Route::delete('/hapus-barang/{barang}', [BarangController::class, 'hapus'])
 Route::get('/ubah-barang/{barang}', [BarangController::class, 'ubah'])
     ->name('barang.ubah');
 Route::put('/update-barang', [BarangController::class, 'update']);
+
+Route::get('/',function(){
+    return view('/dashboard');
+});
 
 
 //haloo

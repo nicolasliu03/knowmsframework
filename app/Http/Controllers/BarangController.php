@@ -18,11 +18,11 @@ class BarangController extends Controller
 
     // Menampilkan form tambah barang
     public function create()
-    {
-        $kategoris = Kategori::all();
+{
+    $kategoris = Kategori::all();
 
-        return view('barang.create', compact('kategoris'));
-    }
+    return view('barang.create', compact('kategoris'));
+}
 
     // Menyimpan barang baru
     public function simpan(Request $request)

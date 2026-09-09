@@ -35,7 +35,7 @@ class KategoriController extends Controller
     $request->validate([
         'nama_kategori' => [
             'required',
-            'regex:/^[a-zA-Z\s]+$/'
+            'regex:/^[a-zA-Z\s]+$/' // ketentuan untuk tidak bisa simpan selain huruf
         ],
         'deskripsi' => 'required'
     ], [
@@ -62,7 +62,7 @@ class KategoriController extends Controller
     //     $kategori->delete();
     //     return redirect('daftar-kategori');
     // }
-    
+
     public function hapus(Kategori $kategori){
     try {
         $kategori->delete();
@@ -79,8 +79,21 @@ class KategoriController extends Controller
         return view('kategori.ubah', ['kategori' => $kategori]);
     }
 
-    
-    public function update(Request $request){
+
+    public function update(Request $request)
+{
+    $request->validate([
+        'nama_kategori' => [
+            'required',
+            'regex:/^[a-zA-Z\s]+$/'
+        ],
+        'deskripsi' => 'required'
+    ], [
+        'nama_kategori.required' => 'Nama kategori wajib diisi.',
+        'nama_kategori.regex' => 'Nama kategori tidak boleh mengandung angka.',
+        'deskripsi.required' => 'Deskripsi wajib diisi.'
+    ]);
+
     try {
         $kategori = Kategori::find($request->get('id'));
 
@@ -101,7 +114,43 @@ class KategoriController extends Controller
             ->with('error', 'Kategori gagal diubah.');
     }
 }
-    
+
+    public function informasi()
+{
+    $informasis = DB::table('informasis')
+        ->join('kategoris', 'informasis.kategori_id', '=', 'kategoris.id')
+        ->select(
+            'informasis.*',
+            'kategoris.nama_kategori'
+        )
+        ->get();
+
+    return view('informasi.index', [
+        'informasis' => $informasis
+    ]);
+}
+
+    public function lihatInformasi($id)
+{
+    $informasi = DB::table('informasis')
+        ->join('kategoris', 'informasis.kategori_id', '=', 'kategoris.id')
+        ->select(
+            'informasis.*',
+            'kategoris.nama_kategori'
+        )
+        ->where('informasis.id', $id)
+        ->first();
+
+    if (!$informasi) {
+        return redirect('/informasi')
+            ->with('error', 'Informasi tidak ditemukan.');
+    }
+
+    return view('informasi.show', [
+        'informasi' => $informasi
+    ]);
+}
+
     // public function update(Request $request) {
     //     $kategori = Kategori::find($request->get('id'));
     //     $kategori->nama_kategori = $request->get('nama_kategori');
